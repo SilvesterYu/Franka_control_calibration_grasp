@@ -332,6 +332,7 @@ def read_RT(controller):
     ee_rot_pos = controller.eef_rot_and_pos
 
     print(f"End effector rotation and position: {ee_rot_pos}")
+    print("-----------------------------------")
 
 ################################### The controller class ########################################
 class FrankaOSCController():
