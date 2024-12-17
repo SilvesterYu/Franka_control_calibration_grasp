@@ -2,7 +2,7 @@
 Franka crontol code + camera calibration code (ROS Noetic)
 
 ## Frankapy
-Using frankapy controller, origina code: https://github.com/iamlab-cmu/frankapy
+Using frankapy controller, original code: https://github.com/iamlab-cmu/frankapy
 I made minor changes
 
 make sure to change frankapy/bash_scripts/start_control_pc.sh, 
