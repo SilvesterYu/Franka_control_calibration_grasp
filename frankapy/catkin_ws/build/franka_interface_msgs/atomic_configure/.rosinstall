@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/lifanyu/frankapy/catkin_ws/devel/.private/franka_interface_msgs/setup.sh

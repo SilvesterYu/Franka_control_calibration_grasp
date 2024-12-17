@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <param name="robot_description" value="/home/lifanyu/frankapy/urdf/hand.xacro" />
+  <param name="use_gui" value="True" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="/home/lifanyu/rviz/franka_basic_config.rviz" required="true" />        
+
+</launch>

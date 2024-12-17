@@ -1,0 +1,1 @@
+/home/lifanyu/frankapy/catkin_ws/devel/.private/franka_interface_msgs/share/roseus/ros/franka_interface_msgs/msg/ExecuteSkillActionFeedback.l

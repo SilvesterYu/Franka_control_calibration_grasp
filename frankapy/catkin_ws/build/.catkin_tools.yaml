@@ -1,0 +1,6 @@
+devel_space: /home/lifanyu/frankapy/catkin_ws/devel
+install: false
+install_space: /home/lifanyu/frankapy/catkin_ws/install
+profile: default
+source_space: /home/lifanyu/frankapy/catkin_ws/src
+workspace: /home/lifanyu/frankapy/catkin_ws

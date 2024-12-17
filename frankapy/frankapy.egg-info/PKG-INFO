@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: frankapy
+Version: 1.0.0
+Summary: FrankaPy Franka Panda Robot Control Library
+Author: Kevin Zhang, Mohit Sharma, Jacky Liang, Oliver Kroemer
+Author-email: 
+License-File: LICENSE
+Requires-Dist: autolab_core
+Requires-Dist: empy==3.3.4
+Requires-Dist: numpy
+Requires-Dist: numpy-quaternion
+Requires-Dist: numba
+Requires-Dist: rospkg
+Requires-Dist: catkin-tools
+Requires-Dist: protobuf

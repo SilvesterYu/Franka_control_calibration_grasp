@@ -1,0 +1,8 @@
+autolab_core
+empy==3.3.4
+numpy
+numpy-quaternion
+numba
+rospkg
+catkin-tools
+protobuf

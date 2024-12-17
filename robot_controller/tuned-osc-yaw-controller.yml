@@ -1,0 +1,32 @@
+controller_type: OSC_YAW
+
+is_delta: true
+
+traj_interpolator_cfg:
+  traj_interpolator_type: LINEAR_POSE
+  time_fraction: 0.3
+
+Kp:
+  # translation: [500.0, 500.0, 350.0]
+  # translation: 450.0
+  # translation: 750.0
+  translation: [600, 600, 300]
+  # translation: 250.0
+  rotation: 450.0
+
+action_scale:
+  translation: 0.05
+  rotation: 1.0
+
+residual_mass_vec: [0.0, 0.0, 0.0, 0.0, 0.3, 0.5, 0.5]
+
+
+state_estimator_cfg:
+  is_estimation: false
+  state_estimator_type: EXPONENTIAL_SMOOTHING
+  alpha_q: 0.9
+  alpha_dq: 0.9
+  alpha_eef: 0.95
+  alpha_eef_vel: 0.95
+
+
