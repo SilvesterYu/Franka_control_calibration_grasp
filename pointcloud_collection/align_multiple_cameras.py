@@ -18,8 +18,8 @@ alignment_dirname = os.path.join(parent_dir, "camera_calibration", "alignment_re
 alignment_path = os.path.join(alignment_dirname, "camera_alignments_matrices.npz")
 
 # TODO: Uncomment this if you are done with camera alignment and do not wish to accidentally to overwrite the alignment results
-if os.path.exists(alignment_path):
-    raise Exception(f"The camera alignment file '{alignment_path}' exists. If you want to re-compute the alignments and overwrite it, delete it first.")
+# if os.path.exists(alignment_path):
+#     raise Exception(f"The camera alignment file '{alignment_path}' exists. If you want to re-compute the alignments and overwrite it, delete it first.")
 
 # Load pointcloud processing envieronment
 env = PointcloudEnv(
@@ -81,6 +81,7 @@ o3d.visualization.draw_geometries([camera_aligned_pcds_])
 
 # Save alginment transformation matrix
 # Save the transform matrices as npz
+os.makedirs(alignment_dirname, exist_ok=True)
 save_path = os.path.join(alignment_dirname, "camera_alignments_matrices.npz")
 save_content = {
     str(cam_id): transform for cam_id, transform in transforms.items()
