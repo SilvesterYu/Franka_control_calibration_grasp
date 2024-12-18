@@ -500,8 +500,8 @@ if __name__ == "__main__":
     read_RT(controller)
 
     # usage:
-    controller.reset_franka()
-    controller.reset(joint_positions = HOME_JOINTS)
+    # controller.reset_franka()
+    # controller.reset(joint_positions = HOME_JOINTS)
     # controller.reset(joint_positions = FC.READY_JOINTS)
     # controller.move_by(np.array([0.1, 0, 0]), np.array([0, 0, 0]), num_steps=40, num_additional_steps=10)
     # controller.move_by(np.array([0.0, 0.1, 0]), np.array([0, 0, 0]), num_steps=40, num_additional_steps=10)

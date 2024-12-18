@@ -17,7 +17,12 @@ frankapy/bash_scripts/start_control_pc.sh
 and change it to your paths
 
 ## To Run
+
+export PYTHONPATH=$PYTHONPATH:/home/lifanyu/Documents/Github/Franka_control_calibration_grasp
+
 cd to this project's base folder
+
+
 
 cd frankapy
 bash ./bash_scripts/start_control_pc.sh -i iam-dopey
