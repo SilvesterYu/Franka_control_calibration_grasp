@@ -82,9 +82,9 @@ def move_robot_and_record_data(
     
     print(f"Recorded {len(data)} data points.")
     # Save data
-    os.makedirs("calibration/new_data", exist_ok=True)
-    filepath = f"calibration/new_data/new_cam{cam_id}_data.pkl"
-    with open(f"calibration/new_data/new_cam{cam_id}_data.pkl", "wb") as f:
+    os.makedirs("calibration_data/", exist_ok=True)
+    filepath = f"calibration_data//cam{cam_id}_data.pkl"
+    with open(f"calibration_data//cam{cam_id}_data.pkl", "wb") as f:
         pickle.dump(data, f)
     print(filepath)
     return filepath
