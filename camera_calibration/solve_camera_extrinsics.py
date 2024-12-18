@@ -137,7 +137,7 @@ if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Load data
-    cam_id = 0
+    cam_id = 1
     
     data_dirname = os.path.join(current_dir, "calibration_data")
     data_filepath = os.path.join(data_dirname, f"cam{cam_id}_data.pkl")
