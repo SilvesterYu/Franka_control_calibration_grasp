@@ -3,12 +3,13 @@ from pyk4a import PyK4A
 import time
 import sys
 import os
+import matplotlib.pyplot as plt
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(current_dir)
 
-from marker_detection import get_kinect_ir_frame, detect_aruco_markers, estimate_transformation, get_kinect_rgb_frame
+# from marker_detection import get_kinect_ir_frame, detect_aruco_markers, estimate_transformation, get_kinect_rgb_frame
 import numpy as np
 import open3d as o3d
 import os
@@ -56,27 +57,87 @@ def get_kinect_rgbd_frame(device, visualize=False):
 k4a = PyK4A(device_id=0)
 k4a.start()
 
+def plot_pcd(pts3d, rgb):
 
-def record_rgbd():
-    for i in range(50):
-        print(i)
-        # time.sleep(0.1)
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(pts3d.reshape((-1, 3)))
+    pcd.colors = o3d.utility.Vector3dVector(rgb[..., [2, 1, 0]].reshape((-1, 3)) / 255.0)
+
+    origin_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.5, origin=[0, 0, 0])
+
+    # Visualize the point cloud
+    o3d.visualization.draw_geometries([pcd, origin_frame])
+
+def record_rgbd(frames = 50):
+
+    pcd_vid = np.zeros((frames, 720, 1280, 3), dtype = np.float32)
+    rgb_vid = np.zeros((frames, 720, 1280, 3), dtype = np.uint8)
+    
+    for i in range(frames):
+        # print(i)
+        time.sleep(0.1)
         ir_frame, rgb_frame, ir_frame_norm, pcd_frame, depth_frame = get_kinect_rgbd_frame(k4a)
 
-        rgb_frame = rgb_frame[:, :, :3]
+        pts3d = pcd_frame.astype(np.float32) / 1e3          # Convert to meters  
+        rgb = rgb_frame[:, :, :3]
 
-        ir_frame = np.expand_dims(ir_frame, axis = 2)
-        depth_frame = np.expand_dims(depth_frame, axis = 2)
+        pcd_vid[i] = pts3d
+        rgb_vid[i] = rgb
 
-        res = np.zeros((rgb_frame.shape[0], rgb_frame.shape[1], 4))
-        res[:, :, :3] = rgb_frame[:, :, :3]
-        # res[:, :, -1:] = ir_frame
-        res[:, :, -1:] = depth_frame
+        # ir_frame = np.expand_dims(ir_frame, axis = 2)
+        # depth_frame = np.expand_dims(depth_frame, axis = 2)
 
-        with open(f"vtamp/demo{DEMO}/frames/frame" + str(i) + ".npy", 'wb') as f:
-            np.save(f, res)
-        # cv2.imshow('rgb', rgb_frame)
-        cv2.waitKey(0)
+        # res = np.zeros((rgb_frame.shape[0], rgb_frame.shape[1], 4))
+        # res[:, :, :3] = rgb_frame[:, :, :3]
+        # # res[:, :, -1:] = ir_frame
+        # res[:, :, -1:] = depth_frame
+
+        # with open(f"vtamp/demo{DEMO}/frames/frame" + str(i) + ".npy", 'wb') as f:
+        #     np.save(f, res)
+        # # cv2.imshow('rgb', rgb_frame)
+        # cv2.waitKey(0)
+
+    np.save("pcd_vid.npy", pcd_vid)
+    np.save("rgb_vid.npy", rgb_vid)
+
+    # Define video output parameters
+    output_path = "rgb_vid.mp4"  # Output file name
+    # output_path = "rgb_vid.avi"  # Output file name
+    fps = 30  # Frames per second
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for MP4
+    # fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec for AVI
+    video_writer = cv2.VideoWriter(output_path, fourcc, fps, (rgb_vid.shape[2], rgb_vid.shape[1]))
+
+    print(rgb_vid.shape)
+    print(rgb.dtype)
+
+    # Loop through frames and write to the video file
+    for i in range(frames):
+        frame = rgb_vid[i]  # Extract the i-th frame
+        # print(frame.shape)
+        # print(frame.dtype)
+        video_writer.write(frame)  # Write the frame to the video file
+
+    # Release the video writer
+    video_writer.release()
+
+def get_current_rgbd():
+    
+    # print(i)
+    time.sleep(0.1)
+    ir_frame, rgb_frame, ir_frame_norm, pcd_frame, depth_frame = get_kinect_rgbd_frame(k4a)
+
+    pts3d = pcd_frame.astype(np.float32) / 1e3          # Convert to meters  
+    rgb = rgb_frame[:, :, :3]
+
+    # plot_pcd(pts3d, rgb)
+    
+    np.save("pcd.npy", pts3d)
+    np.save("rgb.npy", rgb)
+
+    cv2.imwrite("rgb.jpg", rgb)
+
+
 
 def read_rgbd():
     pinhole_camera_intrinsic = np.array([[613.32427146,  0.,        633.94909346],
@@ -122,6 +183,9 @@ def record_anchor_rgbd():
 # os.makedirs(f"/home/lifanyu/tax3d/{DEMO}/", exist_ok=True)
 os.makedirs(f"vtamp/demo{DEMO}/frames", exist_ok=True)
 
-record_rgbd()
+# time.sleep(5)
+print("Starting to record")
+# record_rgbd(frames = 100)
+get_current_rgbd()
 #read_rgbd()
 # record_anchor_rgbd()
