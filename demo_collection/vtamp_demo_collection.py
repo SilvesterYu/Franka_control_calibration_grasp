@@ -54,7 +54,7 @@ def get_kinect_rgbd_frame(device, visualize=False):
         return None
 
 
-k4a = PyK4A(device_id=0)
+k4a = PyK4A(device_id=1)
 k4a.start()
 
 def plot_pcd(pts3d, rgb):
@@ -74,8 +74,8 @@ def record_rgbd(frames = 50):
     rgb_vid = np.zeros((frames, 720, 1280, 3), dtype = np.uint8)
     
     for i in range(frames):
-        # print(i)
-        time.sleep(0.1)
+        print(i)
+        # time.sleep(0.1)
         ir_frame, rgb_frame, ir_frame_norm, pcd_frame, depth_frame = get_kinect_rgbd_frame(k4a)
 
         pts3d = pcd_frame.astype(np.float32) / 1e3          # Convert to meters  
@@ -133,7 +133,7 @@ def get_current_rgbd():
     # plot_pcd(pts3d, rgb)
     
     np.save("pcd.npy", pts3d)
-    np.save("rgb.npy", rgb)
+    # np.save("rgb.npy", rgb)
 
     cv2.imwrite("rgb.jpg", rgb)
 
@@ -183,9 +183,9 @@ def record_anchor_rgbd():
 # os.makedirs(f"/home/lifanyu/tax3d/{DEMO}/", exist_ok=True)
 os.makedirs(f"vtamp/demo{DEMO}/frames", exist_ok=True)
 
-# time.sleep(5)
+time.sleep(5)
 print("Starting to record")
-# record_rgbd(frames = 100)
+# record_rgbd(frames = 200)
 get_current_rgbd()
 #read_rgbd()
 # record_anchor_rgbd()
